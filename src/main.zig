@@ -1,6 +1,5 @@
 const vga = @import("./vga.zig");
 const kio = @import("./kio.zig");
-const mem = @import("std").mem;
 
 const ALIGN = 1 << 0;
 const MEMINFO = 1 << 1;
@@ -23,9 +22,6 @@ export var multiboot: MultibootHeader align(4) linksection(".multiboot") =
 
 var stack_bytes: [16 * 1024]u8 align(16) linksection(".bss") = undefined;
 
-// We specify that this function is "naked" to let the compiler know
-// not to generate a standard function prologue and epilogue, since
-// we don't have a stack yet.
 export fn _start() callconv(.Naked) noreturn 
 {
     asm volatile (
